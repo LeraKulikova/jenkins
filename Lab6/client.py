@@ -1,7 +1,6 @@
-import json, requests
+import requests
 import sentry_sdk
 from sentry_sdk import configure_scope
-import logging
 
 sentry_sdk.init("https://dbf98bd7df8941848dc689f45176b3d3@o778448.ingest.sentry.io/5797914")
 
@@ -13,9 +12,8 @@ try:
     #r=requests.get("https://127.0.0.1:5000/")
     r1=requests.get("https://api.nasa.gov/planetary/apod?api_key=")
     if r1.status_code != 200:
-        logging.error("Connection error, logging")
         print("Connection error, logging")
+        raise requests.exceptions.ConnectionError("Connection error, logging")
 except requests.exceptions.ConnectionError as e:
     sentry_sdk.capture_exception(e)
-    r="The destination computer rejected the connection request"
-    print(r)
+    print(str(e))
