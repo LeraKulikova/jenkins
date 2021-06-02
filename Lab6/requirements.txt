@@ -1,5 +1,4 @@
 json
 requests
-tkinter
 sentry_sdk
 logging
